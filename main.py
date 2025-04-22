@@ -6,7 +6,7 @@ from circleshape import CircleShape
 from asteroidfield import AsteroidField
 from asteroid import Asteroid
 from shooting import Shot
-
+from score import ScoreManager
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
     
 
     dt = 0
-    
+    score_manager = ScoreManager()
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
@@ -54,6 +54,7 @@ def main():
         for asteroid in asteroids:
             for shot in shots:
                 if shot.collide(asteroid):
+                    score_manager.add_points(10)
                     asteroid.split()
                     shot.kill()
 
@@ -61,6 +62,7 @@ def main():
         screen.fill("black")
         for entity in drawable:
             entity.draw(screen)
+        score_manager.draw(screen)
         pygame.display.flip()
 
     
